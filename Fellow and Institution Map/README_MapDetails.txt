@@ -1,5 +1,3 @@
-Hi ! Thanks for accessing my files. This should just be Nino looking at this to make sure I didn't mess anything up when tweaking my code for GitHub testing. If you're not Nino, please delete these files. Thanks.
-
 Eventually I will include a more detailed disclaimer and description in this file. I'm continuously working on it, so make sure to check back for updates.
 
 Necessary packages:
@@ -38,5 +36,3 @@ The data from FellowsFile is displayed as red bubbles. The bubbles are centered 
 PLEASE NOTE FOR FacultyMapMakingCode.py: For an MSI or R2 to be displayed on the faculty map (FacultyMapMakingCode.py), the insitution must have at least 2 faculty with an expertise in astronomy: this includes, by default, locations with astronomy departments, majors, minors, and concentrations. Institutions with only 1 astronomy faculty will not be displayed on the map. THEREFORE, ONLY THOSE INSTITUTIONS WHOSE "Numerous Astronomy Faculty" COLUMN IS LABELLED "Y" WILL APPEAR ON THE MAP AS A PIN.
 
 PLEASE NOTE FOR DepartmentMapMakingCode.py: For an MSI or R2 to be displayed on the faculty map (DepartmentMapMakingCode.py), the insitution must have an astronomy program: this includes locations with astronomy departments, majors, minors, and concentrations. There is no requirement placed on the number of astronomy faculty. THEREFORE, THOSE INSTITUTIONS WHOSE "Astronomy Program" COLUMN IS LABELLED "Y" WILL APPEAR ON THE MAP AS A PIN.
-
-TO TEST: Please run the file 'MAPMakingCode.py'. Thanks !
