@@ -11,7 +11,7 @@ def CarnegieMatching_OneSpreadsheet(inputData, institution_column, carnegieData,
     carnegieData = A data frame containing Carnegie Classifications for all US institutions ('CarnegieClassification_Data.csv')
     exceptionsData = A data frame containing a list of erroneous institution names with their correct Carnegie classification names ('Exception_zipcodes_Carnegie.csv)
     
-    NOTE: This function's output, 'outputDf', is the same spreadsheet as inputData, only with two new columns: 'MSI Classification' and 'Research Classification'.
+    NOTE: This function's output, 'outputDf', is the same spreadsheet as inputData, only with three new columns: 'Homogenized Institution Name', 'MSI Classification' and 'Research Classification'.
     '''
     # Remove nans
     exceptionsData = exceptionsData.fillna('None')
@@ -208,9 +208,101 @@ def CarnegieMatching_OneSpreadsheet(inputData, institution_column, carnegieData,
 
 ##################################################################################################################################
 
-def MAINCarnegieMatching(inputData, institution_column, carnegieData, exceptionsData):
+def ResearchClassFinder(index, carnegieInfo):
+    '''
+    This function determines the Carnegie research classification (4Y, R2, R1, etc.) of an institution.
+    
+    index = The index of the institution in the Carnegie reference file 'CarnegieClassification_Data.csv' (int)
+    '''
+    # Create reference dictionary
+    classDict = {14: '4Y', 
+                 15: 'R1', 
+                 16: 'R2', 
+                 17: 'R2 - 17', 
+                 18: 'R2 - 18', 
+                 19: 'R2 - 19', 
+                 20: 'R2 - 20', 
+                 21: '4Y', 
+                 22: '4Y', 
+                 23: '4Y', 
+                 33: 'TC'}
+    
+    # Find number associated with research class
+    research_class_num = carnegieInfo['basic2021'][index]
+    
+    # Find descriptor associated with number
+    try:
+        research_class = classDict[research_class_num]
+    except:
+        if 9 < research_class_num < 13:
+            research_class = 'SF'
+        elif 0 < research_class_num < 10:
+            research_class = '2Y'
+        elif research_class_num == -2:
+            research_class = 'N/A'
+        elif 23 < research_class_num < 33:
+            research_class = '4Y'
+            
+    return research_class
+
+##################################################################################################################################
+
+def MSIClassFinder(index, carnegieInfo):
+    '''
+    This function determines the MSI classification of an institution based on the Carnegie classification database.
+    
+    index = The index of the institution in the Carnegie reference file 'CarnegieClassification_Data.csv' (int)
+    '''
+    hbcu = carnegieInfo['hbcu'][index]
+    if hbcu == 1:
+        hbcu_class = 'Yes'
+        #newCarnegieDict['HBCU'].append(hbcu_class)
+    else:
+        hbcu_class = 'No'
+        #newCarnegieDict['HBCU'].append(hbcu_class)
+
+    tribal = carnegieInfo['tribal'][index]
+    if tribal == 1:
+        tribal_class = 'Yes'
+        #newCarnegieDict['Tribal College'].append(tribal_class)
+    else:
+        tribal_class = 'No'
+        #newCarnegieDict['Tribal College'].append(tribal_class)
+
+    hsi = carnegieInfo['hsi'][index]
+    if hsi == 1:
+        hsi_class = 'Yes'
+        #newCarnegieDict['HSI'].append(hsi_class)
+    else:
+        hsi_class = 'No'
+        #newCarnegieDict['HSI'].append(hsi_class)
+
+    msi = carnegieInfo['msi'][index]
+    if msi == 1:
+        if hbcu_class == 'Yes':
+            msi_class = 'HBCU'
+            #newCarnegieDict['MSI Classification'].append(msi_class)
+        elif tribal_class == 'Yes':
+            msi_class = 'TC'
+            #newCarnegieDict['MSI Classification'].append(msi_class)
+        elif hsi_class == 'Yes':
+            msi_class = 'HSI'
+            #newCarnegieDict['MSI Classification'].append(msi_class)
+        else:
+            msi_class = 'Undefined'
+            #newCarnegieDict['MSI Classification'].append(msi_class)
+    else:
+        msi_class = 'None'
+        #newCarnegieDict['MSI Classification'].append(msi_class)
+        
+    return hbcu_class, tribal_class, hsi_class, msi_class
+
+##################################################################################################################################
+
+def CarnegieMatching_NoUser(inputData, institution_column, carnegieData, exceptionsData):
     '''
     This function is the main function in this file. It takes in a spreadsheet containing various institution names and returns a spreadsheet containing MSI and Research classifications for each institution based on the Carnegie Classification database. It incorporates user inputs to address any exceptions.
+    This function does not incorporate any user input.
     
     inputData = A data frame containing a list of instiutions to be classified (Must have a column titled 'Institution Name')
     institution_column = The name of the column within inputData that contains information on institution name (string)
@@ -389,97 +481,6 @@ def CarnegieExceptionsMatching(inputData, institution_column, carnegieData, exce
     
     # Return the outputDict and the exceptionsDict
     return outputDf, exceptionsDf
-
-##################################################################################################################################
-
-def ResearchClassFinder(index, carnegieInfo):
-    '''
-    This function determines the Carnegie research classification (4Y, R2, R1, etc.) of an institution.
-    
-    index = The index of the institution in the Carnegie reference file 'CarnegieClassification_Data.csv' (int)
-    '''
-    # Create reference dictionary
-    classDict = {14: '4Y', 
-                 15: 'R1', 
-                 16: 'R2', 
-                 17: 'R2 - 17', 
-                 18: 'R2 - 18', 
-                 19: 'R2 - 19', 
-                 20: 'R2 - 20', 
-                 21: '4Y', 
-                 22: '4Y', 
-                 23: '4Y', 
-                 33: 'TC'}
-    
-    # Find number associated with research class
-    research_class_num = carnegieInfo['basic2021'][index]
-    
-    # Find descriptor associated with number
-    try:
-        research_class = classDict[research_class_num]
-    except:
-        if 9 < research_class_num < 13:
-            research_class = 'SF'
-        elif 0 < research_class_num < 10:
-            research_class = '2Y'
-        elif research_class_num == -2:
-            research_class = 'N/A'
-        elif 23 < research_class_num < 33:
-            research_class = '4Y'
-            
-    return research_class
-
-##################################################################################################################################
-
-def MSIClassFinder(index, carnegieInfo):
-    '''
-    This function determines the MSI classification of an institution based on the Carnegie classification database.
-    
-    index = The index of the institution in the Carnegie reference file 'CarnegieClassification_Data.csv' (int)
-    '''
-    hbcu = carnegieInfo['hbcu'][index]
-    if hbcu == 1:
-        hbcu_class = 'Yes'
-        #newCarnegieDict['HBCU'].append(hbcu_class)
-    else:
-        hbcu_class = 'No'
-        #newCarnegieDict['HBCU'].append(hbcu_class)
-
-    tribal = carnegieInfo['tribal'][index]
-    if tribal == 1:
-        tribal_class = 'Yes'
-        #newCarnegieDict['Tribal College'].append(tribal_class)
-    else:
-        tribal_class = 'No'
-        #newCarnegieDict['Tribal College'].append(tribal_class)
-
-    hsi = carnegieInfo['hsi'][index]
-    if hsi == 1:
-        hsi_class = 'Yes'
-        #newCarnegieDict['HSI'].append(hsi_class)
-    else:
-        hsi_class = 'No'
-        #newCarnegieDict['HSI'].append(hsi_class)
-
-    msi = carnegieInfo['msi'][index]
-    if msi == 1:
-        if hbcu_class == 'Yes':
-            msi_class = 'HBCU'
-            #newCarnegieDict['MSI Classification'].append(msi_class)
-        elif tribal_class == 'Yes':
-            msi_class = 'TC'
-            #newCarnegieDict['MSI Classification'].append(msi_class)
-        elif hsi_class == 'Yes':
-            msi_class = 'HSI'
-            #newCarnegieDict['MSI Classification'].append(msi_class)
-        else:
-            msi_class = 'Undefined'
-            #newCarnegieDict['MSI Classification'].append(msi_class)
-    else:
-        msi_class = 'None'
-        #newCarnegieDict['MSI Classification'].append(msi_class)
-        
-    return hbcu_class, tribal_class, hsi_class, msi_class
 
 ##################################################################################################################################
 
