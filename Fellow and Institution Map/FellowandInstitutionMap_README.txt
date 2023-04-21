@@ -31,10 +31,30 @@ This collection of functions and files was developed over several months while w
 ——————————————————————————————————————————————————
 
 THE DETAILS
-In this section, you will find a (relatively) detailed description of the purpose and functionality of the main function contained within the files "DepartmentMapMakingCode.py" and "FacultyMapMakingCode.py".
+In this section, you will find a (relatively) detailed description of the purpose and functionality of the main function contained within the files "DepartmentMapMakingCode.py"/"FacultyMapMakingCode.py" and "MapUtilities.py".
+——————————————
 mapMaker(): This function takes in the necessary files to build the NHFP Map with surrounding institutions. Its inputs are as follows:
 - FellowsFile = csv containing fellow information ('FellowshipTypeSplit_Updated2022.csv')
 - MSIR2File = csv containing information on MSIs ('FINAL_MSIR2Data.csv')
 
 To use this function, open a Jupyter notebook (or equivalent) and import the necessary files listed in the earlier section. Then, fill in the two inputs to mapMaker with the appropriate .csv files and save the resultant output to your device.
+——————————————
+latlongcalculator(): This function determines the latitude and longitude of a location and/or its address from geopy's Nominatim database. A Nominatim user_agent string is required to run this function.
+——————————————
+get_zipcode(): This function determines the zip code of a location based on its latitude and longitude.
+——————————————
+LocFinder(): This function takes in a DataFrame of a list of names and institutions and returns the same DataFrame with four additional columns: Latitude, Longitude, Address, and Zip Code of the institutions.
+——————————————
+NumberofFellowsperInst(): This function determines the number of people (fellows) at a single institution based on an input DataFrame with the following information...
+- Host institution name
+- Full name of fellow
+- Latitude of host institution
+- Longitude of host institution
+- Zip code of host institution
+The function can be used to create the file FellowshipTypeSplit_Updated2022.csv or similar. 
 
+——————————————————————————————————————————————————
+
+I would like to give special thanks to Antonino Cucchiara, my supervisor and guide at NASA, who offered invaluable guidance and input while I developed this code. I would also like to thank the great people at NASA HQ APD for their constant encouragement and support. Thank you to USRA and the internship coordinators for offering such a special opportunity to work at NASA HQ for almost a full year. This experience was life-changing. 
+
+Please do not hesitate to contact me via GitHub with any comments, questions, concerns, or bugs. Happy coding !
