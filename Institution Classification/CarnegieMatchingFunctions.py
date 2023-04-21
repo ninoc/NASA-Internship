@@ -99,7 +99,7 @@ def CarnegieMatching_OneSpreadsheet(inputData, institution_column, carnegieData,
             # If the institution name isn't in the exceptions list yet...
             else:
                 # Get the Carnegie name from the user
-                c_inst = input(f'The institution "{inst1}" was not found in our references. Please input the name we should search for instead:')
+                c_inst = input(f'\n The institution "{inst1}" was not found in our references. This could mean one of several things: \n 1. The institution name is of a university within the Carnegie classification spreadsheet, and is slightly misspelled. \n 2. The institution name is not a university, but is present within the Exceptions spreadsheet, and is slightly misspelled. \n 3. The institution name is not misspelled and is not recorded in the Carnegie spreadsheet or within the Exceptions spreadsheet. \n In case of options 1 or 2, please manually search both the Carnegie and the Exceptions spreadsheet for a similar institution name. If found, type the name from the Carnegie or Exceptions spreadsheet in the following user prompt. If no similar name is found in either spreadsheet (option 3), please re-type the name in the user prompt. \n')
 
                 # If their input is in the big carnegie spreadsheet...
                 if c_inst in carnegieInsts:
@@ -153,9 +153,9 @@ def CarnegieMatching_OneSpreadsheet(inputData, institution_column, carnegieData,
                 # If neither...
                 else:
                     # Gather info
-                    other_inst = input(f'Your input "{c_inst}" was not found in the Carnegie database. Your input may not qualify as a degree-granting institution. Please type the name of your institution.')
-                    research_class = input(f'What is the research classification of this institution ? (R1, R2, 4Y, G = Government, RC = Research Center, F = Foreign, I = Industry, or None)')
-                    msi_class = input(f'What is the MSI classification of this institution ? (HSI, BSI, HBCU, or None)')
+                    other_inst = input(f'\n Your new input "{c_inst}" was not found in the Carnegie database, nor in the Exceptions spreadsheet. Your input may not have been encountered in our database before. For records, please type the name of your institution. This will create a new entry in the Exceptions spreadsheet: \n')
+                    research_class = input(f'\n What is the research classification of this institution ? (R1, R2, 4Y, G = Government, RC = Research Center, F = Foreign, I = Industry, or None) \n ')
+                    msi_class = input(f' \n What is the MSI classification of this institution ? (HSI, BSI, HBCU, or None) \n ')
                     
                     ### Append to output dict
                     ###outputDict['Institution Name'].append(other_inst)
