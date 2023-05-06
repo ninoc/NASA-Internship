@@ -249,7 +249,7 @@ def step6_expertiseFinder(paperSearchDf, year):
         affs = row[7]
         abstract = row[8]
          
-        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
          
         for name in journalNames:
             if name in bibcode:
@@ -351,7 +351,7 @@ def step6_expertiseFinderNameInst(paperSearchDf, year):
         affs = row[7]
         abstract = row[8]
          
-        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
          
         for name in journalNames:
             if name in bibcode:
@@ -394,7 +394,7 @@ def step6_expertiseFinder_singleName(paperSearchDf, year):
     
     paperSearchDf = paperSearchDf[paperSearchDf['Year'] > year]
     
-    journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+    journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
 
     for row in paperSearchDf.values:
         firstauthor = row[0]
@@ -407,7 +407,7 @@ def step6_expertiseFinder_singleName(paperSearchDf, year):
         affs = row[7]
         abstract = row[8]
          
-        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
          
         for name in journalNames:
             if name in bibcode:
@@ -445,7 +445,7 @@ def step6_mostStrict(paperSearchDf, year):
     
     paperSearchDf = paperSearchDf[paperSearchDf['Year'] > year]
     
-    journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+    journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
     
     for row in paperSearchDf.values:
         firstauthor = row[0]
@@ -458,7 +458,7 @@ def step6_mostStrict(paperSearchDf, year):
         affs = row[7]
         abstract = row[8]
          
-        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE']
+        journalNames = ['ApJ', 'MNRAS', 'AJ', 'Nature', 'Science', 'PASP', 'AAS', 'arXiv', 'SPIE', 'A&A']
          
         for name in journalNames:
             if name in bibcode:
